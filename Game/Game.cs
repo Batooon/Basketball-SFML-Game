@@ -19,12 +19,14 @@ namespace Game
         ScoreText score;
         Ball ball;
         Background background;
+        Basket basket;
 
         public Game() : base(DEFAULT_WINDOW_WIDTH, DEFAULT_WINDOW_HEIGHT, WINDOW_TITLE, Color.Black)
         {
             score = new ScoreText();
             ball = new Ball();
             background = new Background();
+            basket = new Basket();
         }
 
         public override void Initialize()
@@ -36,6 +38,7 @@ namespace Game
             background.LoadContent();
             score.LoadContent();
             ball.LoadContent();
+            basket.LoadContent();
         }
 
         public override void Update(GameTime gameTime)
@@ -45,6 +48,7 @@ namespace Game
         {
             background.Display(this);
             ball.DisplayBall(this);
+            basket.Display(this);
             score.DisplayPerformanceData(this, Color.White);
         }
     }

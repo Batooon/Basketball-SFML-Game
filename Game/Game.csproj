@@ -60,13 +60,13 @@
   <ItemGroup>
     <Compile Include="Background.cs" />
     <Compile Include="Ball.cs" />
+    <Compile Include="Basket.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="GameLoop.cs" />
     <Compile Include="GameTime.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ScoreText.cs" />
-    <Compile Include="World.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
