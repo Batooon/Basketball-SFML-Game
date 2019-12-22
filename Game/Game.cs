@@ -17,10 +17,14 @@ namespace Game
 
         public const string WINDOW_TITLE = "Basketball Game!";
         ScoreText score;
+        Ball ball;
+        Background background;
 
         public Game() : base(DEFAULT_WINDOW_WIDTH, DEFAULT_WINDOW_HEIGHT, WINDOW_TITLE, Color.Black)
         {
             score = new ScoreText();
+            ball = new Ball();
+            background = new Background();
         }
 
         public override void Initialize()
@@ -29,7 +33,9 @@ namespace Game
 
         public override void LoadContent()
         {
+            background.LoadContent();
             score.LoadContent();
+            ball.LoadContent();
         }
 
         public override void Update(GameTime gameTime)
@@ -37,23 +43,9 @@ namespace Game
         }
         public override void Draw(GameTime gameTime)
         {
+            background.Display(this);
+            ball.DisplayBall(this);
             score.DisplayPerformanceData(this, Color.White);
         }
-
-        /*World world;
-        public Game()
-        {
-            world = new World();
-        }
-
-        public void Update()
-        {
-
-        }
-
-        public void Draw()
-        {
-            Program.Window.Draw(world);
-        }*/
     }
 }
