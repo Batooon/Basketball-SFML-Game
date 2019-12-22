@@ -30,41 +30,5 @@ namespace Game
             Game game = new Game();
             game.Run();
         }
-
-        /*static RenderWindow win;
-        public static Game Game { private set; get; }
-        public static RenderWindow Window { get { return win; } }
-
-        static void Main(string[] args)
-        {
-            win = new RenderWindow(new SFML.Window.VideoMode(1600, 900), "Basketball");
-            win.SetVerticalSyncEnabled(true);
-
-            win.Closed += Win_Closed;
-
-            //Load content and Init
-            Game = new Game();
-
-            //Game Loop
-            while (win.IsOpen)
-            {
-                //Update Game Logic
-                win.DispatchEvents();
-
-                Game.Update();
-
-                win.Clear(Color.Black);
-
-                //Draw
-                Game.Draw();
-
-                win.Display();
-            }
-        }
-
-        private static void Win_Closed(object sender, EventArgs e)
-        {
-            win.Close();
-        }*/
     }
 }

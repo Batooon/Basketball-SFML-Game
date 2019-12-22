@@ -12,25 +12,37 @@ namespace Game
     {
         public const int BALL_SIZE = 100;
 
-        const string CONTENT_DIR = "..\\Content\\";
+        const string CONTENT_DIR = "..\\Content\\Textures\\ball.png";
 
         public Texture ballTexture;
-        CircleShape circleShape;
+        CircleShape ball;
+
+        public void LoadContent()
+        {
+            ballTexture = new Texture(CONTENT_DIR);
+        }
 
         public Ball()
         {
-            ballTexture = new Texture(CONTENT_DIR + "Textures\\ball.png");
-            circleShape = new CircleShape(BALL_SIZE * 0.5f);
 
-            circleShape.Texture = ballTexture;
-            circleShape.TextureRect = new IntRect(0, 0, 1979, 1974);
+        }
+
+        public void DisplayBall(GameLoop gameLoop)
+        {
+            ball = new CircleShape(BALL_SIZE * 0.5f);
+
+            ball.Texture = ballTexture;
+            ball.TextureRect = new IntRect(0, 0, 1979, 1974);
+            ball.Position = new Vector2f(800f, 450f);
+
+            gameLoop.Window.Draw(this);
         }
 
         public void Draw(RenderTarget target, RenderStates states)
         {
             states.Transform *= Transform;
 
-            target.Draw(circleShape, states);
+            target.Draw(ball, states);
         }
     }
 }

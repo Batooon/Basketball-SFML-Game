@@ -12,7 +12,7 @@ namespace Game
 {
     public abstract class GameLoop
     {
-        public const int TARGET_FPS = 60;
+        public const int TARGET_FPS = 120;
         public const float TIME_UNTIL_UPDATE = 1f / TARGET_FPS;
 
         public RenderWindow Window
