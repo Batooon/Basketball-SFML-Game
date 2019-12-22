@@ -23,8 +23,7 @@ namespace Game
             circleShape = new CircleShape(BALL_SIZE * 0.5f);
 
             circleShape.Texture = ballTexture;
-            circleShape.TextureRect = new IntRect(0, 0, 2230, 2142);
-
+            circleShape.TextureRect = new IntRect(0, 0, 1979, 1974);
         }
 
         public void Draw(RenderTarget target, RenderStates states)
