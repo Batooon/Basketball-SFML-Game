@@ -21,7 +21,7 @@ namespace Game
             consoleFont = new Font(CONSOLE_FONT_PATH);
         }
 
-        public void DisplayPerformanceData(GameLoop gameLoop, Color fontColor)
+        public void DisplayPerformanceData(GameLoop gameLoop, Color fontColor, Ball ball)
         {
             if (consoleFont == null)
                 return;
@@ -30,6 +30,8 @@ namespace Game
             string deltaTime = gameLoop.GameTime.DeltaTime.ToString("0.000");
             float fps = 1f / gameLoop.GameTime.DeltaTime;
             string fpsStr = fps.ToString("0.00");
+
+            string BallCoordinates = $"{ball.ball.Position.X};{ball.ball.Position.Y}";
 
             Text text = new Text(totalTimeElapsedText, consoleFont, 14);
             text.Position = new Vector2f(4f, 8f);
@@ -43,9 +45,14 @@ namespace Game
             textc.Position = new Vector2f(4f, 48f);
             textc.Color = fontColor;
 
+            Text ballCoordinates = new Text(BallCoordinates, consoleFont, 14);
+            ballCoordinates.Position = new Vector2f(4f, 68f);
+            ballCoordinates.Color = Color.Red;
+
             gameLoop.Window.Draw(text);
             gameLoop.Window.Draw(textb);
             gameLoop.Window.Draw(textc);
+            gameLoop.Window.Draw(ballCoordinates);
         }
     }
 }

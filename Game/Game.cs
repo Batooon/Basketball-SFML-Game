@@ -17,7 +17,7 @@ namespace Game
 
         public const string WINDOW_TITLE = "Basketball Game!";
         ScoreText score;
-        Ball ball;
+        public Ball ball;
         Background background;
         Basket basket;
 
@@ -43,13 +43,15 @@ namespace Game
 
         public override void Update(GameTime gameTime)
         {
+            ball.Update(this);
         }
+
         public override void Draw(GameTime gameTime)
         {
             background.Display(this);
             ball.DisplayBall(this);
             basket.Display(this);
-            score.DisplayPerformanceData(this, Color.White);
+            score.DisplayPerformanceData(this, Color.White, ball);
         }
     }
 }
