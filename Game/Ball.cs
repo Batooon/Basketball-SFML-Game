@@ -10,90 +10,64 @@ using System.Threading.Tasks;
 
 namespace Game
 {
-    public class Ball:Transformable,Drawable
+    public class Ball : Actor, IUpdatable
     {
-        public const int BALL_SIZE = 100;
+        float accelerationModifier = 20f;
+        Vector2f velocity = new Vector2f(100f, 100f);
 
+        Vector2f ballPosition = new Vector2f();
+
+        public const int BALL_DIAMETER = 200;
+        public const float BALL_RADIUS = BALL_DIAMETER * .5f;
+
+        Vector2f offsetPosition = new Vector2f(BALL_RADIUS, BALL_RADIUS);
+          
         const string CONTENT_DIR = "..\\Content\\Textures\\ball.png";
 
-        public Texture ballTexture;
-        public CircleShape ball;
+        const float JUMP_KOEF = 0.95f;
 
-        float x, y;
-        float dx = 0f, dy = 0f;
+        public Ball(ActorArgs args) : base(args)
+        {
+            ballPosition = form.Position;
+        }
 
         public void LoadContent()
         {
-            ballTexture = new Texture(CONTENT_DIR);
-            ball = new CircleShape(BALL_SIZE * 0.5f);
-            ball.Texture = ballTexture;
-            ball.TextureRect = new IntRect(0, 0, 1979, 1974);
-            ball.Position = new Vector2f(800f, 450f);
-            x = ball.Position.X;
-            y = ball.Position.Y;
         }
 
-        public Ball()
+        public void Hit(Vector2i punchPosition)
         {
+            Vector2f punchVector = (form.Position + offsetPosition) - (Vector2f)punchPosition;
 
+            velocity += punchVector * accelerationModifier;
         }
 
-        public void Update(GameLoop gameLoop)
+        public bool IsPointInside(Vector2i point)
         {
-            if (ball == null)
+            return point.DistanceTo(form.Position + offsetPosition) < BALL_RADIUS;
+        }
+
+        public void Update(float deltaTime)
+        {
+            if (form == null)
                 return;
 
-            dy += 0.2f;
-            if (Mouse.IsButtonPressed(Mouse.Button.Left))
-                dx -= 0.2f;
-            if (Mouse.IsButtonPressed(Mouse.Button.Right))
-                dx += 0.2f;
+            if ((form.Position.X + offsetPosition.X) <= BALL_RADIUS && velocity.X < 0)
+                velocity.X *= -JUMP_KOEF;
+            if ((form.Position.X + offsetPosition.X) >= 1600 - BALL_RADIUS && velocity.X > 0)
+                velocity.X *= -JUMP_KOEF;
+            if ((form.Position.Y + offsetPosition.Y) <= BALL_RADIUS && velocity.Y < 0)
+                velocity.Y *= -JUMP_KOEF;
+            if ((form.Position.Y + offsetPosition.Y) >= 900 - BALL_RADIUS && velocity.Y > 0)
+                velocity.Y *= -JUMP_KOEF;
+            else
+                velocity.Y += 250 * deltaTime;
 
-            if (ball.Position.X <= 10f)
-                dx = 10f;
-            if (ball.Position.X >= 1500f)
-                dx = -10f;
-            if (ball.Position.Y >= 800f)
-                dy = -10f;
-            if (ball.Position.Y <= 100f)
-                dy = 10f;
+            velocity *= 0.99f;
 
-            x += dx;
-            y += dy;
-            ball.Position = new Vector2f(x, y);
 
-            //Vector2f vector = new Vector2f();
-            /*if (Mouse.IsButtonPressed(Mouse.Button.Left)
-                && Mouse.GetPosition(gameLoop.Window).X == ball.Position.X
-                && Mouse.GetPosition(gameLoop.Window).Y == ball.Position.Y)
-            {
-                dy += 0.2f;
-                y += dy;
-                if (y > 450f)
-                    dy = -10;
-                ball.Position = new Vector2f(x, y);
-            }*/
-
-            /*if (Mouse.IsButtonPressed(Mouse.Button.Left))
-            {
-                Vector2f mousePos = (Vector2f)Mouse.GetPosition(gameLoop.Window);
-                Vector2f position = ball.Position;
-                Vector2f ballPos = position;
-                vector = ballPos - mousePos;
-            }
-            ball.Position += vector * gameLoop.GameTime.DeltaTime;*/
-        }
-
-        public void DisplayBall(GameLoop gameLoop)
-        {
-            gameLoop.Window.Draw(this);
-        }
-
-        public void Draw(RenderTarget target, RenderStates states)
-        {
-            states.Transform *= Transform;
-
-            target.Draw(ball, states);
+            ballPosition += velocity * deltaTime;
+            form.Position = ballPosition;
         }
     }
 }

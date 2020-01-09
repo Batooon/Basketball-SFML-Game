@@ -15,6 +15,8 @@ namespace Game
         public const int TARGET_FPS = 120;
         public const float TIME_UNTIL_UPDATE = 1f / TARGET_FPS;
 
+        protected List<IUpdatable> UpdatableObjects;
+
         public RenderWindow Window
         {
             get;
@@ -36,11 +38,18 @@ namespace Game
         protected GameLoop(uint windowWidth, uint windowHeight,string windowTitle, Color windowClearColor)
         {
             WindowClearColor = windowClearColor;
-            Window = new RenderWindow(new VideoMode(windowWidth, windowHeight), windowTitle);
+            Window = new RenderWindow(new VideoMode(windowWidth, windowHeight), windowTitle, Styles.Default);
+            Window.SetVerticalSyncEnabled(true);
             GameTime = new GameTime();
 
             Window.Closed += WindowClosed;
+
+            UpdatableObjects = new List<IUpdatable>();
         }
+
+        protected bool isEndGame = false;
+        public virtual bool IsEndGameLoop()
+            => !Window.IsOpen || isEndGame;
 
         public void Run()
         {
@@ -54,7 +63,7 @@ namespace Game
 
             Clock clock = new Clock();
 
-            while (Window.IsOpen)
+            while (!IsEndGameLoop())
             {
                 Window.DispatchEvents();
 
@@ -63,6 +72,8 @@ namespace Game
                 previousTimeElapsed = totalTimeElapsed;
 
                 totalTimeBeforeUpdate += deltaTime;
+
+                GetInput();
 
                 if (totalTimeBeforeUpdate >= TIME_UNTIL_UPDATE)
                 {
@@ -83,9 +94,14 @@ namespace Game
             Window.Close();
         }
 
-        public abstract void LoadContent();
-        public abstract void Initialize();
-        public abstract void Update(GameTime gameTime);
-        public abstract void Draw(GameTime gameTime);
+        public virtual void LoadContent() { }
+        public virtual void Initialize() { }
+        public virtual void Update(GameTime gameTime) 
+        {
+            foreach (IUpdatable u in UpdatableObjects)
+                u.Update(gameTime.DeltaTime);
+        }
+        public virtual void Draw(GameTime gameTime) { }
+        public virtual void GetInput() { }
     }
 }
