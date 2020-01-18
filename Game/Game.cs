@@ -69,6 +69,9 @@ namespace Game
         {
             base.Update(gameTime);
 
+            if (ball.IsPointInside(inputManager.mousePos))
+                ball.Hit(inputManager.mousePos);
+
             bool isInsideNow = ball.form.Position.X > basket.borderLeft.Position.X
                 && ball.form.Position.X < basket.borderRight.Position.X
                 && ball.form.Position.Y < basket.borderRight.Position.Y
@@ -90,33 +93,5 @@ namespace Game
             basket.Display(this);
             text.Display(this);
         }
-
-
-#region FuckingKostyl
-        bool wasPressed = false;
-        public override void GetInput()
-        {
-            if (Keyboard.IsKeyPressed(Keyboard.Key.Escape))
-                isEndGame = true;
-
-            if (Mouse.IsButtonPressed(Mouse.Button.Left))
-            {
-                if (wasPressed)
-                    return;
-                wasPressed = true;
-
-                if (ball == null)
-                    return;
-
-                Vector2i MousePos = Mouse.GetPosition();
-                if (ball.IsPointInside(MousePos))
-                    ball.Hit(MousePos);
-            }
-            else
-            {
-                wasPressed = false;
-            }
-        }
-#endregion
     }
 }

@@ -35,6 +35,8 @@ namespace Game
             protected set;
         }
 
+        public InputManager inputManager = new InputManager();
+
         protected GameLoop(uint windowWidth, uint windowHeight,string windowTitle, Color windowClearColor)
         {
             WindowClearColor = windowClearColor;
@@ -101,6 +103,6 @@ namespace Game
                 u.Update(gameTime.DeltaTime);
         }
         public virtual void Draw(GameTime gameTime) { }
-        public virtual void GetInput() { }
+        public virtual void GetInput() { inputManager.RefreshInput(ref isEndGame); }
     }
 }

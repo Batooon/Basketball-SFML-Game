@@ -65,7 +65,6 @@
     <Compile Include="Game.cs" />
     <Compile Include="GameLoop.cs" />
     <Compile Include="GameTime.cs" />
-    <Compile Include="IActor.cs" />
     <Compile Include="InputManager.cs" />
     <Compile Include="IUpdatable.cs" />
     <Compile Include="MathUtils.cs" />
