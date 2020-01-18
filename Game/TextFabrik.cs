@@ -8,19 +8,19 @@ using SFML.System;
 
 namespace Game
 {
-    public static class TextFabrik
+    public class TextFabrik
     {
-        public static TextActorArgs Text(FontDir font, string text, uint characterSize, Vector2f position, Color color)
+        public TextActor Create(FontDir font, string text, uint characterSize, Vector2f position, Color color)
         {
-            TextActorArgs actor;
+            TextActorArgs args;
 
-            actor.FontPath = font;
-            actor.Text = text;
-            actor.CharacterSize = characterSize;
-            actor.TextPosition = position;
-            actor.TextColor = color;
+            args.FontPath = font;
+            args.Text = text;
+            args.CharacterSize = characterSize;
+            args.TextPosition = position;
+            args.TextColor = color;
 
-            return actor;
+            return new TextActor(args);
         }
 
     }
