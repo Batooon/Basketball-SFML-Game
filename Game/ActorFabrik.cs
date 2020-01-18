@@ -8,18 +8,27 @@ using SFML.Graphics;
 
 namespace Game
 {
-    public static class ActorFabrik
+    public class ActorFabrik
     {
-        public static ActorArgs CreateActorArgs(ActorType objectType, Shape shape, IntRect rect, Vector2f position = new Vector2f())
+        public Actor CreateActor(ActorType objectType, Shape shape, IntRect rect, Vector2f position = new Vector2f())
         {
             ActorArgs args;
-
             args.actorType = objectType;
-            args.Shape = shape;
-            args.Rect = rect;
             args.Position = position;
+            args.Rect = rect;
+            args.Shape = shape;
 
-            return args;
+            switch (objectType)
+            {
+                case ActorType.Background:
+                    return new Actor(args);
+                case ActorType.Ball:
+                    return new Ball(args);
+                case ActorType.Basket:
+                    return new Basket(args);
+                default:
+                    throw new NotSupportedException("This type of object is not exist");
+            }
         }
     }
 }
