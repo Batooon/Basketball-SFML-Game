@@ -18,7 +18,15 @@ namespace Game
             args.Rect = rect;
             args.Shape = shape;
 
-            return new Actor(args);
+            switch (objectType)
+            {
+                case ActorType.Ball:
+                    return new Ball(args);
+                case ActorType.Basket:
+                    return new Basket(args);
+                default:
+                    return new Actor(args);
+            }
         }
     }
 }
