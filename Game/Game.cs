@@ -12,6 +12,9 @@ namespace Game
 {
     public class Game:GameLoop
     {
+        ActorFabrik actorFactory = new ActorFabrik();
+        TextFabrik textFactory = new TextFabrik();
+
         public const uint DEFAULT_WINDOW_WIDTH = 1600;
         public const uint DEFAULT_WINDOW_HEIGHT = 900;
 
@@ -20,9 +23,40 @@ namespace Game
         TextActor text;
         public Ball ball;
         Actor background;
-        Actor basket;
+        Basket basket;
+
+        int score = 0;
+        bool isInside = false;
 
         public Game() : base(DEFAULT_WINDOW_WIDTH, DEFAULT_WINDOW_HEIGHT, WINDOW_TITLE, Color.Black)
+        {
+        }
+
+        private void InitScoretext()
+        {
+            text = textFactory.Create(FontDir.Default, $"SCORE: {score}",
+                20, new Vector2f(4f, 8f), Color.Red);
+        }
+
+        private void InitBackground()
+        {
+            background = actorFactory.CreateActor(ActorType.Background, 
+                new RectangleShape(new Vector2f(1600f, 900f)), new IntRect(0, 0, 2000, 1500));
+        }
+
+        private void InitBasket()
+        {
+            basket = (Basket)actorFactory.CreateActor(ActorType.Basket,
+                new RectangleShape(new Vector2f(250f, 250f)), new IntRect(0, 0, 640, 463), new Vector2f(1350f, 300f));
+        }
+
+        private void InitBall()
+        {
+            ball = (Ball)actorFactory.CreateActor(ActorType.Ball,
+                new CircleShape(100), new IntRect(0, 0, 1979, 1974), new Vector2f(800f, 450f));
+        }
+    
+        public override void LoadContent()
         {
             InitBall();
             InitBackground();
@@ -31,41 +65,22 @@ namespace Game
             UpdatableObjects.Add(ball);
         }
 
-        private void InitScoretext()
-        {
-            text = new TextActor(TextFabrik.Text(FontDir.Default, "Score",
-                20, new Vector2f(4f, 8f), Color.Red));
-        }
-
-        private void InitBackground()
-        {
-            background = new Actor(ActorFabrik.CreateActorArgs(ActorType.Background,
-                new RectangleShape(new Vector2f(1600f, 900f)), new IntRect(0, 0, 2000, 1500)));
-        }
-
-        private void InitBasket()
-        {
-            basket = new Actor(ActorFabrik.CreateActorArgs(ActorType.Basket,
-                new RectangleShape(new Vector2f(250f, 250f)), new IntRect(0, 0, 640, 463), new Vector2f(1350f, 300f)));
-        }
-
-        private void InitBall()
-        {
-            ball = new Ball(ActorFabrik.CreateActorArgs(ActorType.Ball,
-                new CircleShape(100), new IntRect(0, 0, 1979, 1974), new Vector2f(800f, 450f)));
-        }
-
-        public override void Initialize()
-        {
-        }
-
-        public override void LoadContent()
-        {
-        }
-
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
+
+            bool isInsideNow = ball.form.Position.X > basket.borderLeft.Position.X
+                && ball.form.Position.X < basket.borderRight.Position.X
+                && ball.form.Position.Y < basket.borderRight.Position.Y
+                && ball.get_velocity().Y > 0;
+            ///TODO: Сделать базовую физику(интерфейс: если два объекта взаимодействуют, то AddForce)
+            bool isScored = isInsideNow && !isInside;
+            isInside = isInsideNow;
+
+            if (isScored)
+            {
+                text.textArgs.Text = $"SCORE: {++score}";
+            }
         }
 
         public override void Draw(GameTime gameTime)
