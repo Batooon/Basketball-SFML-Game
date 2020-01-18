@@ -54,7 +54,6 @@ namespace Game
         public void Run()
         {
             LoadContent();
-            Initialize();
 
             float totalTimeBeforeUpdate = 0f;
             float previousTimeElapsed = 0f;
