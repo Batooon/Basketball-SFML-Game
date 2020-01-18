@@ -57,7 +57,7 @@ namespace Game
             form.TextureRect = args.Rect;
         }
 
-        public void Draw(RenderTarget target, RenderStates states)
+        public virtual void Draw(RenderTarget target, RenderStates states)
         {
             states.Transform *= Transform;
 
