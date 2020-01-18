@@ -22,11 +22,11 @@ namespace Game
         public Color TextColor;
     }
 
-    class TextActor
+    public class TextActor
     {
         string DefaultFontDir = "./Fonts/Alatsi-Regular.ttf";
         public Font font;
-        TextActorArgs textArgs;
+        public TextActorArgs textArgs;
 
         Text text;
 
@@ -54,6 +54,8 @@ namespace Game
         {
             if (text == null)
                 return;
+
+            text = new Text(textArgs.Text, font, textArgs.CharacterSize);
 
             gameLoop.Window.Draw(text);
         }
