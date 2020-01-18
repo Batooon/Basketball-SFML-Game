@@ -18,17 +18,7 @@ namespace Game
             args.Rect = rect;
             args.Shape = shape;
 
-            switch (objectType)
-            {
-                case ActorType.Background:
-                    return new Actor(args);
-                case ActorType.Ball:
-                    return new Ball(args);
-                case ActorType.Basket:
-                    return new Basket(args);
-                default:
-                    throw new NotSupportedException("This type of object is not exist");
-            }
+            return new Actor(args);
         }
     }
 }
