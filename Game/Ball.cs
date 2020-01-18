@@ -14,6 +14,7 @@ namespace Game
     {
         float accelerationModifier = 20f;
         Vector2f velocity = new Vector2f(100f, 100f);
+        public Vector2f get_velocity() => velocity;
 
         Vector2f ballPosition = new Vector2f();
 
