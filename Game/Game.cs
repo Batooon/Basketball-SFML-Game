@@ -12,7 +12,7 @@ namespace Game
 {
     public class Game:GameLoop
     {
-        ActorFabrik actorFactory = new ActorFabrik();
+        //ActorFabrik actorFactory = new ActorFabrik();
         TextFabrik textFactory = new TextFabrik();
 
         public const uint DEFAULT_WINDOW_WIDTH = 1600;
@@ -40,19 +40,19 @@ namespace Game
 
         private void InitBackground()
         {
-            background = actorFactory.CreateActor<Actor>(ActorType.Background,
+            background = this.CreateActor<Actor>(ActorType.Background,
                 new RectangleShape(new Vector2f(1600f, 900f)), new IntRect(0, 0, 2000, 1500), new Texture(ObjectsTextureDir.BackgroundDir));
         }
 
         private void InitBasket()
         {
-            basket = actorFactory.CreateActor<Basket>(ActorType.Basket,
+            basket = this.CreateActor<Basket>(ActorType.Basket,
                 new RectangleShape(new Vector2f(250f, 250f)), new IntRect(0, 0, 640, 463),new Texture(ObjectsTextureDir.BasketDir), new Vector2f(1350f, 300f));
         }
 
         private void InitBall()
         {
-            ball = actorFactory.CreateActor<Ball>(ActorType.Ball,
+            ball = this.CreateActor<Ball>(ActorType.Ball,
                 new CircleShape(100), new IntRect(0, 0, 1979, 1974), new Texture(ObjectsTextureDir.BallDir), new Vector2f(800f, 450f));
         }
     
