@@ -10,13 +10,12 @@ using System.Threading.Tasks;
 
 namespace Game
 {
-    public class Ball : Actor, IUpdatable
+    public class Ball : Actor, IUpdatable, ICollidable
     {
-        float accelerationModifier = 20f;
+        public bool isHit = false;
+        float accelerationModifier = 10f;
         Vector2f velocity = new Vector2f(100f, 100f);
         public Vector2f get_velocity() => velocity;
-
-        Vector2f ballPosition = new Vector2f();
 
         public const int BALL_DIAMETER = 200;
         public const float BALL_RADIUS = BALL_DIAMETER * .5f;
@@ -26,11 +25,6 @@ namespace Game
         const string CONTENT_DIR = "..\\Content\\Textures\\ball.png";
 
         const float JUMP_KOEF = 0.95f;
-
-        public Ball(ActorArgs args) : base(args)
-        {
-            ballPosition = form.Position;
-        }
 
         public void LoadContent()
         {
@@ -53,6 +47,16 @@ namespace Game
             if (form == null)
                 return;
 
+            CheckForCollide();
+
+            velocity.Y += 250 * deltaTime;
+            velocity *= 0.99f;
+
+            form.Position += velocity * deltaTime;
+        }
+
+        public void CheckForCollide()
+        {
             if ((form.Position.X + offsetPosition.X) <= BALL_RADIUS && velocity.X < 0)
                 velocity.X *= -JUMP_KOEF;
             if ((form.Position.X + offsetPosition.X) >= 1600 - BALL_RADIUS && velocity.X > 0)
@@ -61,14 +65,6 @@ namespace Game
                 velocity.Y *= -JUMP_KOEF;
             if ((form.Position.Y + offsetPosition.Y) >= 900 - BALL_RADIUS && velocity.Y > 0)
                 velocity.Y *= -JUMP_KOEF;
-            else
-                velocity.Y += 250 * deltaTime;
-
-            velocity *= 0.99f;
-
-
-            ballPosition += velocity * deltaTime;
-            form.Position = ballPosition;
         }
     }
 }

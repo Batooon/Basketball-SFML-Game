@@ -14,7 +14,7 @@ namespace Game
         public RectangleShape borderLeft;
 
 
-        public Basket(ActorArgs args) : base(args)
+        public Basket()
         {
             borderLeft = InitBorder(new Vector2f(1f, 250f), new Vector2f(1350f, 300f), Color.Red);
             borderRight = InitBorder(new Vector2f(1f, 250f), new Vector2f(1590f, 300f), Color.Red);
