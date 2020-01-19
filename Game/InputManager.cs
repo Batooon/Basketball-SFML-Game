@@ -10,7 +10,7 @@ namespace Game
 {
     public class InputManager
     {
-        bool wasPressed = false;
+        public bool wasPressed = false;
         public Vector2i mousePos = new Vector2i();
 
         public void RefreshInput(ref bool isEndGame)
