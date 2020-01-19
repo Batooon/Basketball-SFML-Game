@@ -40,20 +40,20 @@ namespace Game
 
         private void InitBackground()
         {
-            background = actorFactory.CreateActor(ActorType.Background, 
-                new RectangleShape(new Vector2f(1600f, 900f)), new IntRect(0, 0, 2000, 1500));
+            background = actorFactory.CreateActor<Actor>(ActorType.Background,
+                new RectangleShape(new Vector2f(1600f, 900f)), new IntRect(0, 0, 2000, 1500), new Texture(ObjectsTextureDir.BackgroundDir));
         }
 
         private void InitBasket()
         {
-            basket = (Basket)actorFactory.CreateActor(ActorType.Basket,
-                new RectangleShape(new Vector2f(250f, 250f)), new IntRect(0, 0, 640, 463), new Vector2f(1350f, 300f));
+            basket = actorFactory.CreateActor<Basket>(ActorType.Basket,
+                new RectangleShape(new Vector2f(250f, 250f)), new IntRect(0, 0, 640, 463),new Texture(ObjectsTextureDir.BasketDir), new Vector2f(1350f, 300f));
         }
 
         private void InitBall()
         {
-            ball = (Ball)actorFactory.CreateActor(ActorType.Ball,
-                new CircleShape(100), new IntRect(0, 0, 1979, 1974), new Vector2f(800f, 450f));
+            ball = actorFactory.CreateActor<Ball>(ActorType.Ball,
+                new CircleShape(100), new IntRect(0, 0, 1979, 1974), new Texture(ObjectsTextureDir.BallDir), new Vector2f(800f, 450f));
         }
     
         public override void LoadContent()
@@ -69,7 +69,7 @@ namespace Game
         {
             base.Update(gameTime);
 
-            if (ball.IsPointInside(inputManager.mousePos))
+            if (ball.IsPointInside(inputManager.mousePos) && inputManager.wasPressed)
                 ball.Hit(inputManager.mousePos);
 
             bool isInsideNow = ball.form.Position.X > basket.borderLeft.Position.X
