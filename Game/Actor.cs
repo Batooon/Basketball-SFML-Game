@@ -28,29 +28,22 @@ namespace Game
         public Shape Shape;
         public IntRect Rect;
         public Vector2f Position;
+        public Texture texture;
     }
 
     public class Actor : Transformable, Drawable
     {
-        public Texture texture;
+        Texture texture;
         public Shape form;
-        
-        public Actor(ActorArgs args)
+
+        public Actor()
         {
-            switch (args.actorType)
-            {
-                case ActorType.Ball:
-                    texture = new Texture(ObjectsTextureDir.BallDir);
-                    break;
-                case ActorType.Background:
-                    texture = new Texture(ObjectsTextureDir.BackgroundDir);
-                    break;
-                case ActorType.Basket:
-                    texture = new Texture(ObjectsTextureDir.BasketDir);
-                    break;
-                default:
-                    throw new NotSupportedException("This type of object does not exist");
-            }
+
+        }
+
+        public void PostCreate(ActorArgs args)
+        {
+            texture = args.texture;
             form = args.Shape;
             form.Position = args.Position;
             form.Texture = texture;
