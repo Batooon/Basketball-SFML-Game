@@ -10,10 +10,21 @@ namespace Game
 {
     public static class ActorFabrik
     {
-        public static T CreateActor<T>(this Game game, ActorType objectType, Shape shape, IntRect rect, Texture texture, Vector2f position = new Vector2f()) where T:Actor,new()
+        public static T CreateActor<T>(this GameLoop game, Shape shape, IntRect rect, Texture texture, Vector2f position = new Vector2f()) where T:Actor,new()
+        {
+            T t = CreateActor_Internal<T>(shape, rect, texture, position);
+            RegisterActor(game, t); ;
+            return t;
+        }
+
+        private static void RegisterActor(GameLoop game, Actor t)
+        {
+            game.RegisterActor(t);
+        }
+
+        private static T CreateActor_Internal<T>(Shape shape, IntRect rect, Texture texture, Vector2f position) where T : Actor, new()
         {
             ActorArgs args;
-            args.actorType = objectType;
             args.Position = position;
             args.Rect = rect;
             args.Shape = shape;
