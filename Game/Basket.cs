@@ -13,7 +13,6 @@ namespace Game
         public RectangleShape borderRight;
         public RectangleShape borderLeft;
 
-
         public Basket()
         {
             borderLeft = InitBorder(new Vector2f(1f, 250f), new Vector2f(1350f, 300f), Color.Red);

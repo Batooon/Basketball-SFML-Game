@@ -21,8 +21,6 @@ namespace Game
         public const float BALL_RADIUS = BALL_DIAMETER * .5f;
 
         Vector2f offsetPosition = new Vector2f(BALL_RADIUS, BALL_RADIUS);
-          
-        const string CONTENT_DIR = "..\\Content\\Textures\\ball.png";
 
         const float JUMP_KOEF = 0.95f;
 
