@@ -10,23 +10,17 @@ namespace Game
 {
     public class ActorFabrik
     {
-        public Actor CreateActor(ActorType objectType, Shape shape, IntRect rect, Vector2f position = new Vector2f())
+        public T CreateActor<T>(ActorType objectType, Shape shape, IntRect rect, Texture texture, Vector2f position = new Vector2f()) where T:Actor,new()
         {
             ActorArgs args;
             args.actorType = objectType;
             args.Position = position;
             args.Rect = rect;
             args.Shape = shape;
-
-            switch (objectType)
-            {
-                case ActorType.Ball:
-                    return new Ball(args);
-                case ActorType.Basket:
-                    return new Basket(args);
-                default:
-                    return new Actor(args);
-            }
+            args.texture = texture;
+            T t = new T();
+            t.PostCreate(args);
+            return t;
         }
     }
 }
