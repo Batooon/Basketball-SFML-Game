@@ -15,16 +15,8 @@ namespace Game
         public static string BackgroundDir = "..\\Content\\Textures\\background.jpg";
     }
 
-    public enum ActorType
-    {
-        Ball,
-        Background,
-        Basket
-    }
-
     public struct ActorArgs
     {
-        public ActorType actorType;
         public Shape Shape;
         public IntRect Rect;
         public Vector2f Position;

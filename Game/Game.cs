@@ -40,29 +40,28 @@ namespace Game
 
         private void InitBackground()
         {
-            background = this.CreateActor<Actor>(ActorType.Background,
-                new RectangleShape(new Vector2f(1600f, 900f)), new IntRect(0, 0, 2000, 1500), new Texture(ObjectsTextureDir.BackgroundDir));
+            background = this.CreateActor<Actor>(new RectangleShape(new Vector2f(1600f, 900f)),
+                new IntRect(0, 0, 2000, 1500), new Texture(ObjectsTextureDir.BackgroundDir));
         }
 
         private void InitBasket()
         {
-            basket = this.CreateActor<Basket>(ActorType.Basket,
-                new RectangleShape(new Vector2f(250f, 250f)), new IntRect(0, 0, 640, 463),new Texture(ObjectsTextureDir.BasketDir), new Vector2f(1350f, 300f));
+            basket = this.CreateActor<Basket>(new RectangleShape(new Vector2f(250f, 250f)),
+                new IntRect(0, 0, 640, 463),new Texture(ObjectsTextureDir.BasketDir), new Vector2f(1350f, 300f));
         }
 
         private void InitBall()
         {
-            ball = this.CreateActor<Ball>(ActorType.Ball,
-                new CircleShape(100), new IntRect(0, 0, 1979, 1974), new Texture(ObjectsTextureDir.BallDir), new Vector2f(800f, 450f));
+            ball = this.CreateActor<Ball>(new CircleShape(100),
+                new IntRect(0, 0, 1979, 1974), new Texture(ObjectsTextureDir.BallDir), new Vector2f(800f, 450f));
         }
     
-        public override void LoadContent()
+        public override void Initialize()
         {
             InitBall();
             InitBackground();
             InitBasket();
             InitScoretext();
-            UpdatableObjects.Add(ball);
         }
 
         public override void Update(GameTime gameTime)

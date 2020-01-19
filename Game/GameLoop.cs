@@ -17,6 +17,12 @@ namespace Game
 
         protected List<IUpdatable> UpdatableObjects;
 
+        public void RegisterActor(Actor actor)
+        {
+            if (actor is IUpdatable)
+                UpdatableObjects.Add(actor as IUpdatable);
+        }
+
         public RenderWindow Window
         {
             get;
@@ -55,7 +61,7 @@ namespace Game
 
         public void Run()
         {
-            LoadContent();
+            Initialize();
 
             float totalTimeBeforeUpdate = 0f;
             float previousTimeElapsed = 0f;
