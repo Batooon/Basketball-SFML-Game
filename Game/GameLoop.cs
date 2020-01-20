@@ -16,6 +16,12 @@ namespace Game
         public const float TIME_UNTIL_UPDATE = 1f / TARGET_FPS;
 
         protected List<IUpdatable> UpdatableObjects;
+        protected List<IDrawable> DrawableObjects;
+
+        public void RegisterDrawableActor(IDrawable drawable)
+        {
+            DrawableObjects.Add(drawable);
+        }
 
         public void RegisterActor(Actor actor)
         {
@@ -53,6 +59,7 @@ namespace Game
             Window.Closed += WindowClosed;
 
             UpdatableObjects = new List<IUpdatable>();
+            DrawableObjects = new List<IDrawable>();
         }
 
         protected bool isEndGame = false;
@@ -108,7 +115,11 @@ namespace Game
             foreach (IUpdatable u in UpdatableObjects)
                 u.Update(gameTime.DeltaTime);
         }
-        public virtual void Draw(GameTime gameTime) { }
+        public virtual void Draw(GameTime gameTime)
+        {
+            foreach (IDrawable drawableObject in DrawableObjects)
+                drawableObject.Display(this);
+        }
         public virtual void GetInput() { inputManager.RefreshInput(ref isEndGame); }
     }
 }
