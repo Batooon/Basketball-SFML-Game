@@ -23,7 +23,7 @@ namespace Game
         public Texture texture;
     }
 
-    public class Actor : Transformable, Drawable
+    public class Actor : Transformable, Drawable, IDrawable
     {
         Texture texture;
         public Shape form;

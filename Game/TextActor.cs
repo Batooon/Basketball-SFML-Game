@@ -8,46 +8,45 @@ using SFML.System;
 
 namespace Game
 {
-    public enum FontDir
+    public static class TextFontDir
     {
-        Default
+        public static string DefaultFont = "./Fonts/Alatsi-Regular.ttf";
     }
 
     public struct TextActorArgs
     {
-        public FontDir FontPath;
-        public string Text;
-        public uint CharacterSize;
         public Vector2f TextPosition;
         public Color TextColor;
+        public Text text;
     }
 
-    public class TextActor
+    public class TextActor:IDrawable
     {
-        string DefaultFontDir = "./Fonts/Alatsi-Regular.ttf";
         public Font font;
-        public TextActorArgs textArgs;
+        //public TextActorArgs textArgs;
+        public Text text;
 
-        Text text;
+        public string textString;
+        private uint characterSize;
+        private Color color;
 
-        public TextActor(TextActorArgs args)
+        public TextActor()
         {
-            switch (args.FontPath)
-            {
-                case FontDir.Default:
-                    font = new Font(DefaultFontDir);
-                    break;
-                default:
-                    throw new NotSupportedException("This font direction is incorrect");
-            }
-            textArgs = args;
 
-            if (font == null)
-                return;
+        }
 
-            text = new Text(textArgs.Text, font, textArgs.CharacterSize);
-            text.Position = textArgs.TextPosition;
-            text.FillColor = textArgs.TextColor;
+        public void PostCreate(TextActorArgs args)
+        {
+            color = args.TextColor;
+            font = args.text.Font;
+            text = args.text;
+
+            text.Position = args.TextPosition;
+            text.FillColor = args.TextColor;
+            text.Font = font;
+
+            textString = args.text.DisplayedString;
+            characterSize = args.text.CharacterSize;
         }
 
         public void Display(GameLoop gameLoop)
@@ -55,7 +54,8 @@ namespace Game
             if (text == null)
                 return;
 
-            text = new Text(textArgs.Text, font, textArgs.CharacterSize);
+            text = new Text(textString, font, characterSize);
+            text.FillColor = color;
 
             gameLoop.Window.Draw(text);
         }
