@@ -13,13 +13,17 @@ namespace Game
         public static T CreateActor<T>(this GameLoop game, Shape shape, IntRect rect, Texture texture, Vector2f position = new Vector2f()) where T:Actor,new()
         {
             T t = CreateActor_Internal<T>(shape, rect, texture, position);
-            RegisterActor(game, t); ;
+            if (t == null)
+                return null;
+
+            RegisterActor(game, t);
             return t;
         }
 
         private static void RegisterActor(GameLoop game, Actor t)
         {
             game.RegisterActor(t);
+            game.RegisterDrawableActor(t);
         }
 
         private static T CreateActor_Internal<T>(Shape shape, IntRect rect, Texture texture, Vector2f position) where T : Actor, new()
