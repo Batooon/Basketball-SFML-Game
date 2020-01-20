@@ -12,9 +12,6 @@ namespace Game
 {
     public class Game:GameLoop
     {
-        //ActorFabrik actorFactory = new ActorFabrik();
-        TextFabrik textFactory = new TextFabrik();
-
         public const uint DEFAULT_WINDOW_WIDTH = 1600;
         public const uint DEFAULT_WINDOW_HEIGHT = 900;
 
@@ -34,8 +31,8 @@ namespace Game
 
         private void InitScoretext()
         {
-            text = textFactory.Create(FontDir.Default, $"SCORE: {score}",
-                20, new Vector2f(4f, 8f), Color.Red);
+            text = this.CreateText(new Text($"SCORE: {score}", new Font(TextFontDir.DefaultFont), 20),
+                new Vector2f(4f, 8f), Color.Red);
         }
 
         private void InitBackground()
@@ -58,8 +55,9 @@ namespace Game
     
         public override void Initialize()
         {
-            InitBall();
+            //Важно соблюдать порядок(бэкграунд может перекрыть остальные объекты)
             InitBackground();
+            InitBall();
             InitBasket();
             InitScoretext();
         }
@@ -81,16 +79,8 @@ namespace Game
 
             if (isScored)
             {
-                text.textArgs.Text = $"SCORE: {++score}";
+                text.textString = $"SCORE: {++score}";
             }
-        }
-
-        public override void Draw(GameTime gameTime)
-        {
-            background.Display(this);
-            ball.Display(this);
-            basket.Display(this);
-            text.Display(this);
         }
     }
 }
