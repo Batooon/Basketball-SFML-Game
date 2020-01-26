@@ -1,14 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using SFML.Graphics;
-using SFML.Window;
-using SFML.System;
-using SFML.Audio;
-
-/*
+﻿/*
  * GAME LOOP:
  * 1. Load Content
  * 2. Initialize

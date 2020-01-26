@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using SFML.System;
+﻿using SFML.System;
 using SFML.Graphics;
+using Game.Core;
+using Game.Units;
+using Game.Interfaces;
 
-namespace Game
+namespace Game.Factory
 {
     public static class ActorFabrik
     {
@@ -22,8 +20,10 @@ namespace Game
 
         private static void RegisterActor(GameLoop game, Actor t)
         {
-            game.RegisterActor(t);
-            game.RegisterDrawableActor(t);
+            if (t is IUpdatable)
+                game.RegisterActor(t as IUpdatable);
+            if (t is IDrawable)
+                game.RegisterDrawableActor(t);
         }
 
         private static T CreateActor_Internal<T>(Shape shape, IntRect rect, Texture texture, Vector2f position) where T : Actor, new()

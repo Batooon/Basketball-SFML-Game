@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using SFML.System;
+﻿using SFML.System;
 using SFML.Graphics;
+using Game.Core;
+using Game.Interfaces;
 
-namespace Game
+namespace Game.Units
 {
     public static class ObjectsTextureDir
     {
@@ -25,8 +22,9 @@ namespace Game
 
     public class Actor : Transformable, Drawable, IDrawable
     {
-        Texture texture;
         public Shape form;
+
+        private Texture texture;
 
         public Actor()
         {

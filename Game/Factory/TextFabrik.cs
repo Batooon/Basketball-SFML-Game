@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Game.Core;
+using Game.UI;
 using SFML.Graphics;
 using SFML.System;
 
-namespace Game
+namespace Game.Factory
 {
     public static class TextFabrik
     {

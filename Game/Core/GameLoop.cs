@@ -1,55 +1,40 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using SFML.Graphics;
 using SFML.System;
 using SFML.Window;
-using SFML.Audio;
+using Game.Interfaces;
+using Game.Managers;
 
-namespace Game
+namespace Game.Core
 {
     public abstract class GameLoop
     {
         public const int TARGET_FPS = 120;
         public const float TIME_UNTIL_UPDATE = 1f / TARGET_FPS;
 
-        protected List<IUpdatable> UpdatableObjects;
-        protected List<IDrawable> DrawableObjects;
-
-        public void RegisterDrawableActor(IDrawable drawable)
-        {
-            DrawableObjects.Add(drawable);
-        }
-
-        public void RegisterActor(Actor actor)
-        {
-            if (actor is IUpdatable)
-                UpdatableObjects.Add(actor as IUpdatable);
-        }
-
+        public InputManager inputManager = new InputManager();
         public RenderWindow Window
         {
             get;
             protected set;
         }
-
         public GameTime GameTime
         {
             get;
             protected set;
         }
-
         public Color WindowClearColor
         {
             get;
             protected set;
         }
 
-        public InputManager inputManager = new InputManager();
+        protected List<IUpdatable> UpdatableObjects;
+        protected List<IDrawable> DrawableObjects;
+        protected bool isEndGame = false;
 
-        protected GameLoop(uint windowWidth, uint windowHeight,string windowTitle, Color windowClearColor)
+        protected GameLoop(uint windowWidth, uint windowHeight, string windowTitle, Color windowClearColor)
         {
             WindowClearColor = windowClearColor;
             Window = new RenderWindow(new VideoMode(windowWidth, windowHeight), windowTitle, Styles.Default);
@@ -62,7 +47,30 @@ namespace Game
             DrawableObjects = new List<IDrawable>();
         }
 
-        protected bool isEndGame = false;
+        public void RegisterDrawableActor(IDrawable drawable)
+        {
+            if (!DrawableObjects.Contains(drawable))
+            DrawableObjects.Add(drawable);
+        }
+
+        public void RegisterActor(IUpdatable actor)
+        {
+            if (!UpdatableObjects.Contains(actor))
+                UpdatableObjects.Add(actor as IUpdatable);
+        }
+
+        public void UnregisterActor(IUpdatable actor)
+        {
+            if (UpdatableObjects.Contains(actor))
+                UpdatableObjects.Remove(actor);
+        }
+
+        public void UnregisterDrawableActor(IDrawable drawable)
+        {
+            if (DrawableObjects.Contains(drawable))
+                DrawableObjects.Remove(drawable);
+        }
+
         public virtual bool IsEndGameLoop()
             => !Window.IsOpen || isEndGame;
 
@@ -103,14 +111,9 @@ namespace Game
             }
         }
 
-        void WindowClosed(object sender, EventArgs e)
-        {
-            Window.Close();
-        }
-
         public virtual void LoadContent() { }
         public virtual void Initialize() { }
-        public virtual void Update(GameTime gameTime) 
+        public virtual void Update(GameTime gameTime)
         {
             foreach (IUpdatable u in UpdatableObjects)
                 u.Update(gameTime.DeltaTime);
@@ -120,6 +123,31 @@ namespace Game
             foreach (IDrawable drawableObject in DrawableObjects)
                 drawableObject.Display(this);
         }
+
         public virtual void GetInput() { inputManager.RefreshInput(ref isEndGame); }
+
+        private void WindowClosed(object sender, EventArgs e)
+        {
+            Window.Close();
+            Window.Closed -= WindowClosed;
+            RemoveAllUpdatableObjects();
+            RemoveAllDrawableObjects();
+        }
+
+        private void RemoveAllDrawableObjects()
+        {
+            for (int i = 0; i < DrawableObjects.Count; i++)
+            {
+                UnregisterDrawableActor(DrawableObjects[i]);
+            }
+        }
+
+        private void RemoveAllUpdatableObjects()
+        {
+            for (int i = 0; i < UpdatableObjects.Count; i++)
+            {
+                UnregisterActor(UpdatableObjects[i]);
+            }
+        }
     }
 }

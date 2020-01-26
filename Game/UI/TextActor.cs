@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Game.Core;
 using SFML.Graphics;
 using SFML.System;
-
-namespace Game
+using Game.Interfaces;
+namespace Game.UI
 {
     public static class TextFontDir
     {
@@ -20,13 +16,12 @@ namespace Game
         public Text text;
     }
 
-    public class TextActor:IDrawable
+    public class TextActor : IDrawable
     {
+        public string textString;
         public Font font;
-        //public TextActorArgs textArgs;
         public Text text;
 
-        public string textString;
         private uint characterSize;
         private Color color;
 

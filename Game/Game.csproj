@@ -58,22 +58,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Actor.cs" />
-    <Compile Include="ActorFabrik.cs" />
-    <Compile Include="Ball.cs" />
-    <Compile Include="Basket.cs" />
+    <Compile Include="Units\Actor.cs" />
+    <Compile Include="Factory\ActorFabrik.cs" />
+    <Compile Include="Units\Ball.cs" />
+    <Compile Include="Units\Basket.cs" />
     <Compile Include="Game.cs" />
-    <Compile Include="GameLoop.cs" />
-    <Compile Include="GameTime.cs" />
-    <Compile Include="ICollidable.cs" />
-    <Compile Include="IDrawable.cs" />
-    <Compile Include="InputManager.cs" />
-    <Compile Include="IUpdatable.cs" />
-    <Compile Include="MathUtils.cs" />
+    <Compile Include="Core\GameLoop.cs" />
+    <Compile Include="Core\GameTime.cs" />
+    <Compile Include="Interfaces\ICollidable.cs" />
+    <Compile Include="Interfaces\IDrawable.cs" />
+    <Compile Include="Managers\InputManager.cs" />
+    <Compile Include="Interfaces\IUpdatable.cs" />
+    <Compile Include="Utils\MathUtils.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TextActor.cs" />
-    <Compile Include="TextFabrik.cs" />
+    <Compile Include="UI\TextActor.cs" />
+    <Compile Include="Factory\TextFabrik.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
