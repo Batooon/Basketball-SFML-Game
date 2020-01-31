@@ -2,6 +2,6 @@
 {
     interface ICollidable
     {
-        void CheckForCollide();
+        void CheckForCollide(ICollider other);
     }
 }

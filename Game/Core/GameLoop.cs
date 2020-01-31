@@ -117,6 +117,7 @@ namespace Game.Core
         {
             foreach (IUpdatable u in UpdatableObjects)
                 u.Update(gameTime.DeltaTime);
+            CheckForCollide();
         }
         public virtual void Draw(GameTime gameTime)
         {
@@ -125,6 +126,11 @@ namespace Game.Core
         }
 
         public virtual void GetInput() { inputManager.RefreshInput(ref isEndGame); }
+
+        public virtual void CheckForCollide()
+        {
+
+        }
 
         private void WindowClosed(object sender, EventArgs e)
         {

@@ -54,6 +54,11 @@ namespace Game
             }
         }
 
+        public override void CheckForCollide()
+        {
+
+        }
+
         private void InitScoretext()
         {
             _textScore = this.CreateText(new Text($"SCORE: {_scoreAmount}", new Font(TextFontDir.DefaultFont), 20),
