@@ -30,5 +30,13 @@ namespace Game.Units
             border.Position = position;
             return border;
         }
+
+        public bool Contains(Ball ball)
+        {
+            return ball.form.Position.X > BorderLeft.Position.X
+                && ball.form.Position.X < BorderRight.Position.X
+                && ball.form.Position.Y < BorderRight.Position.Y
+                && ball.GetVelocity().Y > 0;
+        }
     }
 }

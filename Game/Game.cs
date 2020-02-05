@@ -40,10 +40,7 @@ namespace Game
             if (inputManager.WasPressed && ball.IsPointInside(inputManager.MousePos)) 
                 ball.Hit(inputManager.MousePos);
 
-            bool isInsideNow = ball.form.Position.X > _basket.BorderLeft.Position.X
-                && ball.form.Position.X < _basket.BorderRight.Position.X
-                && ball.form.Position.Y < _basket.BorderRight.Position.Y
-                && ball.GetVelocity().Y > 0;
+            bool isInsideNow = _basket.Contains(ball);
             ///TODO: Сделать базовую физику(интерфейс: если два объекта взаимодействуют, то AddForce)
             bool isScored = isInsideNow && !_isCursorInsideBall;
             _isCursorInsideBall = isInsideNow;

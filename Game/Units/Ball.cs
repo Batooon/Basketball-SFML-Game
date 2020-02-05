@@ -4,7 +4,7 @@ using Game.Utils;
 
 namespace Game.Units
 {
-    public class Ball : Actor, IUpdatable, ICollidable
+    public class Ball : Actor, IUpdatable
     {
         public const int BALL_DIAMETER = 200;
         public const float BALL_RADIUS = BALL_DIAMETER * .5f;

@@ -19,6 +19,7 @@ namespace Game
         {
             Game game = new Game();
             game.Run();
+
         }
     }
 }

@@ -58,6 +58,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Interfaces\ICollider.cs" />
     <Compile Include="Units\Actor.cs" />
     <Compile Include="Factory\ActorFabrik.cs" />
     <Compile Include="Units\Ball.cs" />
